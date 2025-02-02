@@ -1,0 +1,299 @@
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
+
+ &mt {
+    tapping-term-ms = <150>;
+ };
+
+
+
+/*
+ * ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───────┐
+ * │ $ │ " │ « │ » │ ( │ ) │ @ │ + │ - │ / │ * │ = │ % │       │
+ * ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─────┤
+ * │     │ B │ É │ P │ O │ È │ ^ │ V │ D │ L │ J │ Z │ W │     │
+ * ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┐    │
+ * │      │ A │ U │ I │ E │ , │ C │ T │ S │ R │ N │ M │ Ç │    │
+ * ├────┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───┴────┤
+ * │    │ Ê │ À │ Y │ X │ . │ K │ ' │ Q │ G │ H │ F │          │
+ * ├────┼───┴┬──┴─┬─┴───┴───┴───┴───┴───┴──┬┴───┼───┴┬────┬────┤
+ * │    │    │    │                        │    │    │    │    │
+ * └────┴────┴────┴────────────────────────┴────┴────┴────┴────┘
+ */
+// Row 1
+#define BP_DLR  GRAVE  // $
+#define BP_DQUO N1    // "
+#define BP_LDAQ N2    // «
+#define BP_RDAQ N3    // »
+#define BP_LPRN N4    // (
+#define BP_RPRN N5    // )
+#define BP_AT   N6    // @
+#define BP_PLUS N7    // +
+#define BP_MINS N8    // -
+#define BP_SLSH N9    // /
+#define BP_ASTR N0    // *
+#define BP_EQL  MINUS // =
+#define BP_PERC EQUAL  // %
+// Row 2
+#define BP_B    Q    // B
+#define BP_EACU W    // É
+#define BP_P    E    // P
+#define BP_O    R    // O
+#define BP_EGRV T    // È
+#define BP_DCIR Y    // ^ (dead)
+#define BP_V    U    // V
+#define BP_D    I    // D
+#define BP_L    O    // L
+#define BP_J    P    // J
+#define BP_Z    LEFT_BRACKET // Z
+#define BP_W    RIGHT_BRACKET // W
+// Row 3
+#define BP_A    A    // A
+#define BP_U    S    // U
+#define BP_I    D    // I
+#define BP_E    F    // E
+#define BP_COMM G    // ,
+#define BP_C    H    // C
+#define BP_T    J    // T
+#define BP_S    K    // S
+#define BP_R    L    // R
+#define BP_N    SEMICOLON // N
+#define BP_M    SINGLE_QUOTE // M
+#define BP_CCED BACKSLASH // Ç
+// Row 4
+//#define BP_ECIR KC_NUBS // Ê
+#define BP_AGRV Z    // À
+#define BP_Y    X    // Y
+#define BP_X    C    // X
+#define BP_DOT  V    // .
+#define BP_K    B    // K
+#define BP_QUOT N    // '
+#define BP_Q    M    // Q
+#define BP_G    COMMA // G
+#define BP_H    DOT  // H
+#define BP_F    SLASH // F
+
+
+/* Shifted symbols
+ * ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───────┐
+ * │ # │ 1 │ 2 │ 3 │ 4 │ 5 │ 6 │ 7 │ 8 │ 9 │ 0 │ ° │ ` │       │
+ * ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─────┤
+ * │     │   │   │   │   │   │ ! │   │   │   │   │   │   │     │
+ * ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┐    │
+ * │      │   │   │   │   │ ; │   │   │   │   │   │   │   │    │
+ * ├────┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───┴────┤
+ * │    │   │   │   │   │ : │   │ ? │   │   │   │   │          │
+ * ├────┼───┴┬──┴─┬─┴───┴───┴───┴───┴───┴──┬┴───┼───┴┬────┬────┤
+ * │    │    │    │                        │    │    │    │    │
+ * └────┴────┴────┴────────────────────────┴────┴────┴────┴────┘
+ */
+// Row 1
+#define BP_HASH LS(BP_DLR)  // #
+#define BP_1    LS(BP_DQUO) // 1
+#define BP_2    LS(BP_LDAQ) // 2
+#define BP_3    LS(BP_RDAQ) // 3
+#define BP_4    LS(BP_LPRN) // 4
+#define BP_5    LS(BP_RPRN) // 5
+#define BP_6    LS(BP_AT)   // 6
+#define BP_7    LS(BP_PLUS) // 7
+#define BP_8    LS(BP_MINS) // 8
+#define BP_9    LS(BP_SLSH) // 9
+#define BP_0    LS(BP_ASTR) // 0
+#define BP_DEG  LS(BP_EQL)  // °
+#define BP_GRV  LS(BP_PERC) // `
+// Row 2
+#define BP_EXLM LS(BP_DCIR) // !
+// Row 3
+#define BP_SCLN LS(BP_COMM) // ;
+// Row 4
+#define BP_COLN LS(BP_DOT)  // :
+#define BP_QUES LS(BP_QUOT) // ?
+// Row 5
+#define BP_NBSP LS(SPACE) // (non-breaking space)
+
+
+/* AltGr symbols
+ * ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───────┐
+ * │ – │ — │ < │ > │ [ │ ] │ ^ │ ± │ − │ ÷ │ × │ ≠ │ ‰ │       │
+ * ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─────┤
+ * │     │ | │ ´ │ & │ Œ │ ` │ ¡ │ ˇ │ Ð │ / │ Ĳ │ Ə │ ˘ │     │
+ * ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┐    │
+ * │      │ Æ │ Ù │ ¨ │ € │   │ © │ Þ │ ẞ │ ® │ ~ │ ¯ │ ¸ │    │
+ * ├────┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───┴────┤
+ * │    │   │ \ │ { │ } │ … │ ~ │ ¿ │ ° │   │ † │ ˛ │          │
+ * ├────┼───┴┬──┴─┬─┴───┴───┴───┴───┴───┴──┬┴───┼───┴┬────┬────┤
+ * │    │    │    │           _            │    │    │    │    │
+ * └────┴────┴────┴────────────────────────┴────┴────┴────┴────┘
+ */
+// Row 1
+#define BP_NDSH RA(BP_DLR)  // –
+#define BP_MDSH RA(BP_DQUO) // —
+#define BP_LABK RA(BP_LDAQ) // <
+#define BP_RABK RA(BP_RDAQ) // >
+#define BP_LBRC RA(BP_LPRN) // [
+#define BP_RBRC RA(BP_RPRN) // ]
+#define BP_CIRC RA(BP_AT)   // ^
+#define BP_PLMN RA(BP_PLUS) // ±
+#define BP_MMNS RA(BP_MINS) // −
+#define BP_DIV  RA(BP_SLSH) // ÷
+#define BP_MUL  RA(BP_ASTR) // ×
+#define BP_NEQL RA(BP_EQL)  // ≠
+#define BP_PERM RA(BP_PERC) // ‰
+//// Row 2
+#define BP_PIPE RA(BP_B)    // |
+#define BP_AMPR RA(BP_P)    // &
+//#define BP_OE   ALGR(BP_O)    // Œ
+//#define BP_IEXL ALGR(BP_DCIR) // ¡
+//#define BP_ETH  ALGR(BP_D)    // Ð
+//#define BP_IJ   ALGR(BP_J)    // Ĳ
+//#define BP_SCHW ALGR(BP_Z)    // Ə
+//// Row 3
+//#define BP_AE   ALGR(BP_A)    // Æ
+//#define BP_UGRV ALGR(BP_U)    // Ù
+#define BP_EURO RA(BP_E)    // €
+//#define BP_COPY ALGR(BP_C)    // ©
+//#define BP_THRN ALGR(BP_T)    // Þ
+//#define BP_SS   ALGR(BP_S)    // ẞ
+//#define BP_REGD ALGR(BP_R)    // ®
+//// Row 4
+#define BP_BSLS RA(BP_AGRV) // (backslash)
+#define BP_LCBR RA(BP_Y)    // {
+#define BP_RCBR RA(BP_X)    // }
+#define BP_ELLP RA(BP_DOT)  // …
+#define BP_TILD RA(BP_K)    // ~
+//// Row 5
+#define BP_UNDS RA(SPACE)  // _
+
+/ {
+        behaviors {
+                php_accessor: behavior_macro_1 {
+                        compatible = "zmk,behavior-macro";
+                        label = "MACRO1";
+                        #binding-cells = <0>;
+                        bindings = < &kp BP_MINS &kp BP_RABK >;
+                };
+                markdown_task: behavior_macro_2 {
+                        compatible = "zmk,behavior-macro";
+                        label = "MACRO2";
+                        #binding-cells = <0>;
+                        bindings = < &kp BP_MINS &kp SPACE &kp BP_LBRC &kp SPACE &kp BP_RBRC &kp SPACE >;
+                };
+                hl_r: homerow_layers_right {
+                        compatible = "zmk,behavior-hold-tap";
+                        label = "HOMEROW_LAYERS_R";
+                        #binding-cells = <2>;
+                        tapping-term-ms = <220>;
+                        quick-tap-ms = <250>;
+                        flavor = "tap-preferred";
+                        bindings = <&mo>, <&kp>;
+                };
+        };
+
+
+        keymap {
+                compatible = "zmk,keymap";
+
+                default_layer {
+// -------------------------------------------------------------------------------------------
+// |  w         |  b  |  é  |  p  |  o  |  è  |       |  ^  |  v   |  d  |  l  |  j  |   z    |
+// | CTRL / TAB |  a  |  u  |  i  |  e  |  ,  |       |  c  |  t   |  s  |  r  |  n  |   m    |
+// | SHFT       |  à  |  y  |  x  |  .  |  k  |       |  '  |  q   |  g  |  h  |  h  | ALT(ç) |
+//                         | GUI | SPC | RET | BSPC  | RSHFT |
+                        bindings = <
+   &kp RBKT       &kp BP_B     &kp BP_EACU  &kp BP_P   &kp BP_O     &kp BP_EGRV        &kp BP_DCIR   &kp BP_V    &kp BP_D     &kp BP_L   &kp BP_J    &kp BP_Z
+   &mt LSHFT TAB  &kp BP_A     &kp BP_U     &kp BP_I   &lt 4 BP_E   &kp BP_COMM        &kp BP_C      &lt 5 BP_T  &kp BP_S     &kp BP_R   &kp BP_N    &kp BP_M
+   &kp LCTRL      &kp BP_AGRV  &kp BP_Y     &kp BP_X   &kp BP_DOT   &kp BP_K    &none  &kp C_MUTE       &kp BP_QUOT   &kp BP_Q    &kp BP_G     &kp BP_H   &kp BP_F    &mt RSHFT BP_CCED
+                                      &kp LGUI       &lt 1 SPACE      &mt LALT RET    &mt RCTRL RET       &hl_r 2 BSPC     &mt RALT ESC
+
+                        >;
+
+                        sensor-bindings = <&inc_dec_kp UP DOWN  &inc_dec_kp C_VOL_UP C_VOL_DN>;
+                };
+                lower_layer {
+// ----------------------------------------------------------------------------------
+// | ESC |  "  |  «  |  »   |   (    |  )    |       |  ^  |  &   |  UP  |  (    |  )  | DEL |
+// |     |     |     | REDO |  UNDO  |       |       |     | LEFT | DOWN | RIGHT |     |     |
+// |     |     |     | CUT  |  COPY  | PASTE |       |     |      |      |       |     |     |
+//                       |     |     | RET | ADJ |     |
+                        bindings = <
+   &kp ESC   &kp BP_DQUO   &kp BP_LDAQ   &kp BP_RDAQ   &kp BP_LPRN   &kp BP_RPRN         &kp BP_AT  &kp BP_PLUS     &kp BP_SLSH     &none  &kp BP_ASTR  &kp DEL
+   &kp LSHFT     &none         &none         &kp LC(BP_Y)    &kp LC(BP_Z)    &none               &none        &kp K_SCROLL_UP   &kp UP  &kp K_SCROLL_DOWN &kp PG_UP  &none 
+   &kp LCTRL     &none         &none         &kp LC(BP_X)     &kp LC(BP_C)    &kp LC(BP_V)    &bootloader  &none     &none        &kp LEFT      &kp DOWN  &kp RIGHT   &kp PG_DN    &none 
+                                 &trans      &mo 1       &kp RET    &kp RET     &mo 3       &trans
+                        >;
+                        sensor-bindings = <&inc_dec_kp UP DOWN  &inc_dec_kp C_VOL_UP C_VOL_DN>;
+
+                };
+
+
+                raise_layer {
+
+// -----------------------------------------------------------------------------------------
+// | ESC |  1  |  2  |  3   |  4  |   5   |         |  6   |   7  |   8   |   9   |  0  | DEL |
+// |     |  F1 |     |      |     |       |         | vol up | prev |  pause  | next |     |     |
+// |     |     |     |      |     |       |         | vol dn  |      |        |       |     |     |
+//                       |     | ADJ | RET |    |     |
+                        bindings = <
+   &kp ESC   &kp BP_1   &kp BP_2   &kp BP_3   &kp BP_4   &kp BP_5         &kp BP_6  &kp BP_7   &kp BP_8     &kp BP_9      &kp BP_0  &kp DEL
+   &none     &kp F1     &kp F2         &none         &none         &none               &kp C_VOL_UP   &kp C_PREV      &kp C_PLAY_PAUSE   &kp C_NEXT        &none        &none
+   &none     &none         &none         &none         &none         &none       &none  &bootloader        &kp C_VOL_DN    &kp C_MUTE         &none          &none        &none        &none
+                                    &trans      &mo 3       &kp RET     &kp RET    &trans      &trans
+                        >;
+                };
+
+
+
+                adjust_layer {
+// -----------------------------------------------------------------------------------------
+// | RGB BRI+ | RGB SAT+ | RGB HUE+ | RGB ANI+ |    | RGB TOG |   |  BT1  | BT2 | BT3 | BT4 | BT5 | BT CLR |
+// | RGB BRI- | RGB SAT- | RGB HUE- | RGB ANI+ |    |         |   |       |     |     |     |     |        |
+// |          |          |          |          |    |         |   | RESET |     |     |     |     |        |
+//                                              |     |     |     |     |     |
+                        bindings = <
+   &bootloader  &none  &none  &none  &none        &none            &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &bt BT_CLR
+   &none  &none  &none  &none  &kp PSCRN    &none                  &out OUT_USB &out OUT_BLE &none        &none        &none        &none
+   &none  &none  &none  &none  &none &none      &none &none        &none        &none        &none        &none        &none        &none
+                                                                   &trans       &trans       &tog 3       &kp RET      &trans       &trans
+                        >;
+                        sensor-bindings = <&inc_dec_kp UP DOWN  &inc_dec_kp C_VOL_UP C_VOL_DN>;
+
+
+                };
+
+                number_layer {
+// -----------------------------------------------------------------------------------------
+// |    |     |     |     |     |     |   |  €  |  7  |  8  |  9  |  0  | DEL |
+// |    |     |     |     |     |     |   |  #  |  4  |  5  |  6  |  *  |  =  |
+// |    |     |     |     |     |     |   |  %  |  1  |  2  |  3  |  -  |  .  |
+//                        |     | ADJ | BKSP |    | *   |
+                        bindings = <
+   &none &none &none &none &none &none      &kp BP_EURO    &kp BP_7    &kp BP_8    &kp BP_9   &kp BP_SLSH   &kp DEL
+   &none &none &none &none &none &none      &kp BP_HASH    &kp BP_4    &kp BP_5    &kp BP_6   &kp BP_ASTR   &kp BP_EQL
+   &none &none &none &none &none &none   &none &none   &kp BP_PERC    &kp BP_1    &kp BP_2    &kp BP_3   &kp BP_MINS   &kp BP_DOT
+                                &trans      &mo 3      &kp RET   &kp RET    &kp BP_PLUS    &kp BP_0
+                        >;
+                        sensor-bindings = <&inc_dec_kp UP DOWN  &inc_dec_kp C_VOL_UP C_VOL_DN>;
+
+
+                };
+
+                signs_layer {
+// -----------------------------------------------------------------------------------------
+// |  $ |  "  |  «  |  »  |  (  |  )  |   |  6  |  7  |  8  |  9  |  0  | DEL |
+// |    |  &  |  <  |  >  |  [  |  ]  |   | F1  | F2  | F3  | F4  | F5  | F6  |
+// |    |  |  |  \  |  /  |  {  |  }  |   | F7  | F8  | F9  | F10 | F11 | F12 |
+//                       |     | ADJ |     |    |     |
+                        bindings = <
+   &kp BP_AMPR   &kp BP_LABK  &kp BP_RABK   &kp BP_LBRC  &kp BP_RBRC  &kp BP_AT        &none    &none    &none    &none    &none    &none
+   &kp BP_PIPE   &kp BP_SLSH  &kp BP_BSLS   &kp BP_LPRN  &kp BP_RPRN  &kp BP_DLR       &none    &none    &none    &none    &none    &none
+   &kp BP_CIRC   &kp BP_LDAQ  &kp BP_RDAQ   &kp BP_LCBR  &kp BP_RCBR  &kp BP_TILD   &none &none   &none    &none    &none    &none    &none    &none
+                                &none      &kp BP_UNDS       &none   &none      &none      &none
+                        >;
+                        sensor-bindings = <&inc_dec_kp UP DOWN  &inc_dec_kp C_VOL_UP C_VOL_DN>;
+
+
+                };
+        };
+};
