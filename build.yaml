@@ -19,7 +19,11 @@
 #
 ---
 include:
-  - board: seeeduino_xiao_ble
+  - board: seeeduino_xiao
     shield: corny_left
-  - board: seeeduino_xiao_ble
+  - board: seeeduino_xiao
+    shield: corny_right
+  - board: xiao_ble
+    shield: corny_left
+  - board: xiao_ble
     shield: corny_right
