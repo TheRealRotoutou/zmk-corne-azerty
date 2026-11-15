@@ -1,4 +1,4 @@
-#include "corny.dtsi"
+#include "cornazerty.dtsi"
 
 &default_transform {
     col-offset = <6>;

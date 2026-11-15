@@ -1,17 +1,16 @@
-if SHIELD_CORNY_LEFT
+if SHIELD_CORNAZERTY_LEFT
 
 config ZMK_KEYBOARD_NAME
-    default "Corny"
+    default "Cornazerty"
 
 config ZMK_SPLIT_ROLE_CENTRAL
     default y
 
 endif
 
-if SHIELD_CORNY_LEFT || SHIELD_CORNY_RIGHT
+if SHIELD_CORNAZERTY_LEFT || SHIELD_CORNAZERTY_RIGHT
 
 config ZMK_SPLIT
     default y
 
 endif
-
